@@ -5,7 +5,7 @@
   "main": "dist/my-react-library.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jayanga1996/chat-bot-plugin.git"
+    "url": "git+https://github.com/Spemai-Dev/Chat-Web-SDK.git"
   },
   "dependencies": {
     "@babel/core": "^7.23.3",
