@@ -7,9 +7,10 @@ import arrow_left from "./images/arrow-left-s-line.png";
 
 
 const ChatContainer = (props) => {
-  const baseUrl = process.env.DEV_BASE_URL;
-  const { api_key, agent_id, client_id, client_name, chat_name,sessionId } = props;
+  //const baseUrl = process.env.DEV_BASE_URL;
+  const { api_key, agent_id, client_id, client_name,env_type, chat_name,sessionId } = props;
   const [messages, setMessages] = useState([]);
+  const [baseUrl, setBaseUrl] = useState("");
   const currentUser = "User123"; // Simulated current user
   const chatContainerStyles = {
     chatContainer: {
@@ -32,10 +33,12 @@ const ChatContainer = (props) => {
       padding: "20px",
       overflowY: "scroll",
       height: "50vh",
+        display:"flex",
+        flexDirection:"column-reverse"
     },
     chatContainerFooter: {
       borderTop: "1px solid #F0F0F0",
-      padding: "20px",
+      padding: "15px",
       height: "10vh",
     },
     chatTopicText: {
@@ -63,10 +66,17 @@ const ChatContainer = (props) => {
     //   setMessages(initMsg);
     // }
     // Simulated messages from an API call or WebSocket
-    const initialMessages = [
-      { text: "Hi, How can I help you?", user: "Merchant" },
-     ];
-    setMessages(initialMessages);
+    // const initialMessages = [
+    //   { text: "Hi, How can I help you?", user: "Merchant" },
+    //  ];
+    // setMessages(initialMessages);
+    if (env_type === "DEV") {
+      setBaseUrl("https://api-cai-dev.spemai.com/api/v1/sdk/chat/") ;
+    } else if (env_type === "UAT") {
+      setBaseUrl("https://api-cai-uat.spemai.com/api/v1/sdk/chat/");
+    } else {
+      setBaseUrl("https://api-cai-live.spemai.com/api/v1/sdk/chat/");
+    }
   }, []);
 
   
@@ -74,9 +84,9 @@ const ChatContainer = (props) => {
     const newMessage = { text: message, user: currentUser };
     setMessages((prevMsg) =>[...prevMsg, newMessage]);
     var xhr = new XMLHttpRequest();
-    var url = "https://api-cai-dev.spemai.com/api/v1/sdk/chat/";
+    
 
-    xhr.open("POST", url, true);
+    xhr.open("POST", baseUrl, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader(
       "x-api-key",
