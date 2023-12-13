@@ -604,8 +604,8 @@ var ChatContainer = function ChatContainer(props) {
   var currentUser = "User123"; // Simulated current user
   var chatContainerStyles = {
     chatContainer: {
-      width: "25vw",
-      height: "70vh",
+      width: "400px",
+      height: "650px",
       flexShrink: 0,
       fontFamily: "Arial, sans-serif"
       /* Additional properties can be added here */
@@ -615,22 +615,23 @@ var ChatContainer = function ChatContainer(props) {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      height: "9vh",
-      width: "100%",
+      height: "60px",
+      width: "360px",
       borderBottom: "1px solid #F0F0F0",
       padding: "20px"
     },
     chatContainerBody: {
       padding: "20px",
       overflowY: "scroll",
-      height: "50vh",
+      height: "410px",
       display: "flex",
       flexDirection: "column-reverse"
     },
     chatContainerFooter: {
       borderTop: "1px solid #F0F0F0",
       padding: "15px",
-      height: "10vh"
+      height: "70px",
+      width: "360px"
     },
     chatTopicText: {
       color: "#000",
@@ -873,8 +874,8 @@ var SpemaiChatSdk = function SpemaiChatSdk(props) {
       position: "absolute",
       bottom: "80px",
       right: "0",
-      width: "25vw",
-      height: "70vh",
+      width: "400px",
+      height: "650px",
       flexShrink: "0",
       margin: "0 auto",
       borderRadius: "30px",
