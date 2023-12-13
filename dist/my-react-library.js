@@ -623,7 +623,7 @@ var ChatContainer = function ChatContainer(props) {
     chatContainerBody: {
       padding: "20px",
       overflowY: "scroll",
-      height: "325px",
+      height: "335px",
       display: "flex",
       flexDirection: "column-reverse"
     },
