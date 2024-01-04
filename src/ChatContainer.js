@@ -72,11 +72,11 @@ const ChatContainer = (props) => {
     //  ];
     // setMessages(initialMessages);
     if (env_type === "DEV") {
-      setBaseUrl("https://api-cai-dev.spemai.com/api/v1/sdk/chat/") ;
+      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/sdk/chat/") ;
     } else if (env_type === "UAT") {
-      setBaseUrl("https://api-cai-uat.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://spemai-cai-core-gcp-uat.spemai.com/api/v1/sdk/chat/");
     } else {
-      setBaseUrl("https://api-cai-live.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://spemai-cai-core-gcp-live.spemai.com/api/v1/sdk/chat/");
     }
   }, []);
 
