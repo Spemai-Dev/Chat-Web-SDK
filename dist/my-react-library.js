@@ -713,11 +713,11 @@ var ChatContainer = function ChatContainer(props) {
                   console.log("Response message:", responseMsg);
                   //if (responseObj.status === 100) {
                   var responseMessage = {
-                    text: responseMsg,
+                    text: detectAndConvertLink(responseMsg),
                     user: "OtherUser"
                   };
                   setMessages(function (prevMsg) {
-                    return [].concat(_toConsumableArray(prevMsg), [detectAndConvertLink(responseMessage)]);
+                    return [].concat(_toConsumableArray(prevMsg), [responseMessage]);
                   });
                   //}
                   // Handle successful response here

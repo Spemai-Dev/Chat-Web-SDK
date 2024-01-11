@@ -119,10 +119,10 @@ const ChatContainer = (props) => {
           console.log("Response message:", responseMsg);
           //if (responseObj.status === 100) {
             const responseMessage = {
-              text: responseMsg,
+              text: detectAndConvertLink(responseMsg),
               user: "OtherUser",
             };
-            setMessages((prevMsg) =>[...prevMsg, detectAndConvertLink(responseMessage)]);
+            setMessages((prevMsg) =>[...prevMsg, responseMessage]);
           //}
           // Handle successful response here
         } else {
