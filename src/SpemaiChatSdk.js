@@ -64,11 +64,11 @@ const createChatSession = async () => {
 
   useEffect(()=>{
     if (env_type === "DEV") {
-      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id) ;
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id) ;
     } else if (env_type === "UAT") {
-      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id);
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id);
     } else {
-      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id);
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id);
     }
     //createChatSession()
   },[])
