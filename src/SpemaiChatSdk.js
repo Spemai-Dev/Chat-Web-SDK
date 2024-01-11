@@ -6,7 +6,7 @@ import "./style.css";
 import ChatContainer from "./ChatContainer";
 
 const SpemaiChatSdk = (props) => {
-  const { api_key, agent_id, client_id, client_name,env_type , chat_name } = props;
+  const { api_key, agent_id, uuid, user_id,env_type , chat_name } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [sessionId, setSessionId] = useState("");
   const [baseUrl, setBaseUrl] = useState("");
@@ -29,17 +29,17 @@ const SpemaiChatSdk = (props) => {
 const createChatSession = async () => {
   const xhr = new XMLHttpRequest();
   
-  xhr.open("POST", baseUrl, true);
+  xhr.open("GET", baseUrl, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader("x-api-key", api_key);
+  //xhr.setRequestHeader("x-api-key", api_key);
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
         const responseObj = JSON.parse(xhr.responseText);
-        if(responseObj.status === 100){
-          setSessionId(responseObj.data.session_id)
-        }
+        //if(responseObj.status === 100){
+          setSessionId(responseObj.data[0].session_id)
+        //}
         console.log('Response:', xhr.responseText);
         // Handle successful response here
       } else {
@@ -49,22 +49,26 @@ const createChatSession = async () => {
     }
   };
 
+  // const data = JSON.stringify({
+  //   "client_id": client_id,// this is uuid
+  //   "client_name": client_name,// this is user_id
+  //   "agent_id": agent_id // this is knowledge base id
+  // });
   const data = JSON.stringify({
-    "client_id": client_id,
-    "client_name": client_name,
-    "agent_id": agent_id
+    "uuid": uuid,// this is uuid
+    "user_id": user_id,// this is user_id
   });
 
-  xhr.send(data);
+  xhr.send();
 };
 
   useEffect(()=>{
     if (env_type === "DEV") {
-      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/sdk/session/") ;
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id) ;
     } else if (env_type === "UAT") {
-      setBaseUrl("https://spemai-cai-core-gcp-uat.spemai.com/api/v1/sdk/session/");
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id);
     } else {
-      setBaseUrl("https://spemai-cai-core-gcp-live.spemai.com/api/v1/sdk/session/");
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid="+uuid+"&user_id="+user_id);
     }
     //createChatSession()
   },[])
@@ -126,7 +130,7 @@ const createChatSession = async () => {
       { style: styles.chatWindow },
       React.createElement(
         ChatContainer,
-        {api_key, agent_id, client_id, client_name,env_type,chat_name,sessionId},
+        {api_key, agent_id, uuid, user_id,env_type,chat_name,sessionId},
       )
     )
   );

@@ -8,7 +8,7 @@ import arrow_left from "./images/arrow-left-s-line.png";
 
 const ChatContainer = (props) => {
   //const baseUrl = process.env.DEV_BASE_URL;
-  const { api_key, agent_id, client_id, client_name,env_type, chat_name,sessionId } = props;
+  const { api_key, agent_id, uuid, user_id,env_type, chat_name,sessionId } = props;
   const [messages, setMessages] = useState([]);
   const [baseUrl, setBaseUrl] = useState("");
   const currentUser = "User123"; // Simulated current user
@@ -72,15 +72,31 @@ const ChatContainer = (props) => {
     //  ];
     // setMessages(initialMessages);
     if (env_type === "DEV") {
-      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/sdk/chat/") ;
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/") ;
     } else if (env_type === "UAT") {
-      setBaseUrl("https://spemai-cai-core-gcp-uat.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     } else {
-      setBaseUrl("https://spemai-cai-core-gcp-live.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     }
   }, []);
 
-  
+  const detectAndConvertLink=(text)=> {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const parts = text.split(urlRegex);
+
+    return parts.map((part, index) => {
+        if (part.match(urlRegex)) {
+            return React.createElement('a', {
+                key: index,
+                href: part,
+                target: '_blank',
+                rel: 'noopener noreferrer'
+            }, part);
+        }
+
+        return part;
+    });
+}
   const sendMessage = async (message) => {
     const newMessage = { text: message, user: currentUser };
     setMessages((prevMsg) =>[...prevMsg, newMessage]);
@@ -89,25 +105,25 @@ const ChatContainer = (props) => {
 
     xhr.open("POST", baseUrl, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader(
-      "x-api-key",
-      api_key
-    );
+    // xhr.setRequestHeader(
+    //   "x-api-key",
+    //   api_key
+    // );
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState === XMLHttpRequest.DONE) {
         if (xhr.status === 200) {
           const responseObj = JSON.parse(xhr.responseText); // Parse the JSON response
-        const responseMsg = responseObj?.data?.response_msg; 
+        const responseMsg = responseObj?.answer; 
           console.log("Response status:", responseObj.status);
           console.log("Response message:", responseMsg);
-          if (responseObj.status === 100) {
+          //if (responseObj.status === 100) {
             const responseMessage = {
               text: responseMsg,
               user: "OtherUser",
             };
-            setMessages((prevMsg) =>[...prevMsg, responseMessage]);
-          }
+            setMessages((prevMsg) =>[...prevMsg, detectAndConvertLink(responseMessage)]);
+          //}
           // Handle successful response here
         } else {
           console.error("Error:", xhr.status, xhr.statusText);
@@ -118,11 +134,16 @@ const ChatContainer = (props) => {
       }
     };
 
+    // var send_data = JSON.stringify({
+    //   chat_id: sessionId,
+    //   agent_id: agent_id,
+    //   client_id: uuid,
+    //   message: message,
+    // });
     var send_data = JSON.stringify({
-      chat_id: sessionId,
-      agent_id: agent_id,
-      client_id: client_id,
-      message: message,
+      question: message,
+      session_id: sessionId,
+      uuid: uuid,
     });
 
     xhr.send(send_data);

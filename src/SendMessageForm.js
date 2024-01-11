@@ -45,6 +45,7 @@ const SendMessageForm = ({ sendMessage }) => {
       setMessage('');
     }
   };
+ 
 
   return React.createElement(
     'form',

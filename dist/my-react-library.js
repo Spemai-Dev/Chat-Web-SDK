@@ -586,10 +586,10 @@ var img = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAA
 
 var ChatContainer = function ChatContainer(props) {
   //const baseUrl = process.env.DEV_BASE_URL;
-  var api_key = props.api_key,
-    agent_id = props.agent_id,
-    client_id = props.client_id;
-    props.client_name;
+  props.api_key;
+    props.agent_id;
+    var uuid = props.uuid;
+    props.user_id;
     var env_type = props.env_type,
     chat_name = props.chat_name,
     sessionId = props.sessionId;
@@ -661,13 +661,28 @@ var ChatContainer = function ChatContainer(props) {
     //  ];
     // setMessages(initialMessages);
     if (env_type === "DEV") {
-      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     } else if (env_type === "UAT") {
-      setBaseUrl("https://spemai-cai-core-gcp-uat.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     } else {
-      setBaseUrl("https://spemai-cai-core-gcp-live.spemai.com/api/v1/sdk/chat/");
+      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     }
   }, []);
+  var detectAndConvertLink = function detectAndConvertLink(text) {
+    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    var parts = text.split(urlRegex);
+    return parts.map(function (part, index) {
+      if (part.match(urlRegex)) {
+        return /*#__PURE__*/React.createElement('a', {
+          key: index,
+          href: part,
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        }, part);
+      }
+      return part;
+    });
+  };
   var sendMessage = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(message) {
       var newMessage, xhr, send_data;
@@ -684,24 +699,27 @@ var ChatContainer = function ChatContainer(props) {
             xhr = new XMLHttpRequest();
             xhr.open("POST", baseUrl, true);
             xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("x-api-key", api_key);
+            // xhr.setRequestHeader(
+            //   "x-api-key",
+            //   api_key
+            // );
+
             xhr.onreadystatechange = function () {
               if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
-                  var _responseObj$data;
                   var responseObj = JSON.parse(xhr.responseText); // Parse the JSON response
-                  var responseMsg = responseObj === null || responseObj === void 0 || (_responseObj$data = responseObj.data) === null || _responseObj$data === void 0 ? void 0 : _responseObj$data.response_msg;
+                  var responseMsg = responseObj === null || responseObj === void 0 ? void 0 : responseObj.answer;
                   console.log("Response status:", responseObj.status);
                   console.log("Response message:", responseMsg);
-                  if (responseObj.status === 100) {
-                    var responseMessage = {
-                      text: responseMsg,
-                      user: "OtherUser"
-                    };
-                    setMessages(function (prevMsg) {
-                      return [].concat(_toConsumableArray(prevMsg), [responseMessage]);
-                    });
-                  }
+                  //if (responseObj.status === 100) {
+                  var responseMessage = {
+                    text: responseMsg,
+                    user: "OtherUser"
+                  };
+                  setMessages(function (prevMsg) {
+                    return [].concat(_toConsumableArray(prevMsg), [detectAndConvertLink(responseMessage)]);
+                  });
+                  //}
                   // Handle successful response here
                 } else {
                   console.error("Error:", xhr.status, xhr.statusText);
@@ -716,14 +734,20 @@ var ChatContainer = function ChatContainer(props) {
                 }
               }
             };
+
+            // var send_data = JSON.stringify({
+            //   chat_id: sessionId,
+            //   agent_id: agent_id,
+            //   client_id: uuid,
+            //   message: message,
+            // });
             send_data = JSON.stringify({
-              chat_id: sessionId,
-              agent_id: agent_id,
-              client_id: client_id,
-              message: message
+              question: message,
+              session_id: sessionId,
+              uuid: uuid
             });
             xhr.send(send_data);
-          case 9:
+          case 8:
           case "end":
             return _context.stop();
         }
@@ -762,8 +786,8 @@ var ChatContainer = function ChatContainer(props) {
 var SpemaiChatSdk = function SpemaiChatSdk(props) {
   var api_key = props.api_key,
     agent_id = props.agent_id,
-    client_id = props.client_id,
-    client_name = props.client_name,
+    uuid = props.uuid,
+    user_id = props.user_id,
     env_type = props.env_type,
     chat_name = props.chat_name;
   var _useState = React.useState(false),
@@ -789,21 +813,22 @@ var SpemaiChatSdk = function SpemaiChatSdk(props) {
   };
   var createChatSession = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var xhr, data;
+      var xhr;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             xhr = new XMLHttpRequest();
-            xhr.open("POST", baseUrl, true);
+            xhr.open("GET", baseUrl, true);
             xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.setRequestHeader("x-api-key", api_key);
+            //xhr.setRequestHeader("x-api-key", api_key);
+
             xhr.onreadystatechange = function () {
               if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                   var responseObj = JSON.parse(xhr.responseText);
-                  if (responseObj.status === 100) {
-                    setSessionId(responseObj.data.session_id);
-                  }
+                  //if(responseObj.status === 100){
+                  setSessionId(responseObj.data[0].session_id);
+                  //}
                   console.log('Response:', xhr.responseText);
                   // Handle successful response here
                 } else {
@@ -812,13 +837,20 @@ var SpemaiChatSdk = function SpemaiChatSdk(props) {
                 }
               }
             };
-            data = JSON.stringify({
-              "client_id": client_id,
-              "client_name": client_name,
-              "agent_id": agent_id
+
+            // const data = JSON.stringify({
+            //   "client_id": client_id,// this is uuid
+            //   "client_name": client_name,// this is user_id
+            //   "agent_id": agent_id // this is knowledge base id
+            // });
+            JSON.stringify({
+              "uuid": uuid,
+              // this is uuid
+              "user_id": user_id // this is user_id
             });
-            xhr.send(data);
-          case 7:
+
+            xhr.send();
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -830,11 +862,11 @@ var SpemaiChatSdk = function SpemaiChatSdk(props) {
   }();
   React.useEffect(function () {
     if (env_type === "DEV") {
-      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/sdk/session/");
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid=" + uuid + "&user_id=" + user_id);
     } else if (env_type === "UAT") {
-      setBaseUrl("https://spemai-cai-core-gcp-uat.spemai.com/api/v1/sdk/session/");
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid=" + uuid + "&user_id=" + user_id);
     } else {
-      setBaseUrl("https://spemai-cai-core-gcp-live.spemai.com/api/v1/sdk/session/");
+      setBaseUrl("https://spemai-cai-chat-history-gcp-live.spemai.com/api/v1/chat-window/get/session/all/?uuid=" + uuid + "&user_id=" + user_id);
     }
     //createChatSession()
   }, []);
@@ -909,8 +941,8 @@ var SpemaiChatSdk = function SpemaiChatSdk(props) {
   }, /*#__PURE__*/React.createElement(ChatContainer, {
     api_key: api_key,
     agent_id: agent_id,
-    client_id: client_id,
-    client_name: client_name,
+    uuid: uuid,
+    user_id: user_id,
     env_type: env_type,
     chat_name: chat_name,
     sessionId: sessionId
@@ -922,15 +954,15 @@ var SpemaiCaiSdk = function SpemaiCaiSdk(_ref) {
   var data = _ref.data;
   var api_key = data.api_key,
     agent_id = data.agent_id,
-    client_id = data.client_id,
-    client_name = data.client_name,
+    uuid = data.uuid,
+    user_id = data.user_id,
     env_type = data.env_type,
     chat_name = data.chat_name;
   return /*#__PURE__*/React.createElement(SpemaiChatSdk, {
     api_key: api_key,
     agent_id: agent_id,
-    client_id: client_id,
-    client_name: client_name,
+    uuid: uuid,
+    user_id: user_id,
     env_type: env_type,
     chat_name: chat_name
   });
