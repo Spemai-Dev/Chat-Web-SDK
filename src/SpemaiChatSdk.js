@@ -64,7 +64,7 @@ const createChatSession = async () => {
 
   useEffect(()=>{
     if (env_type === "DEV") {
-      setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id) ;
+      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id) ;
     } else if (env_type === "UAT") {
       setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/get/sessionId/?uuid="+uuid+"&user_id="+user_id+"&knowledge_base_id="+agent_id);
     } else {
