@@ -661,7 +661,7 @@ var ChatContainer = function ChatContainer(props) {
     //  ];
     // setMessages(initialMessages);
     if (env_type === "DEV") {
-      setBaseUrl("https://spemai-cai-core-gcp-dev.spemai.com/api/v1/default-chat/ask/");
+      setBaseUrl("https://cai-core-gke-dev.spemai.com/api/v1/default-chat/ask/");
     } else if (env_type === "UAT") {
       setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     } else {
