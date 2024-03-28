@@ -654,7 +654,7 @@ var ChatContainer = function ChatContainer(props) {
     if (sessionId !== "") {
       var initMsg = {
         text: "I wish you a good day!",
-        user: "User123"
+        user: "OtherUser"
       };
       setMessages(initMsg);
     }
