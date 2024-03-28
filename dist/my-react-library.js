@@ -484,6 +484,9 @@ var MessageList = function MessageList(_ref) {
       letterSpacing: '-0.3px',
       marginTop: '5px',
       marginBottom: '5px'
+    },
+    emptyDiv: {
+      height: '15px'
     }
   };
   var formatDateString = function formatDateString(inputDate) {
@@ -499,7 +502,9 @@ var MessageList = function MessageList(_ref) {
     style: messageListStyles.leftDiv
   }, /*#__PURE__*/React.createElement('div', {
     style: messageListStyles.leftSideChat
-  }, "I wish you a good day!", /*#__PURE__*/React.createElement('div', null, ""), /*#__PURE__*/React.createElement('div', null, "How may I help you today?")), /*#__PURE__*/React.createElement('div', {
+  }, "I wish you a good day!", /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.emptyDiv
+  }, ""), /*#__PURE__*/React.createElement('div', null, "How may I help you today?")), /*#__PURE__*/React.createElement('div', {
     style: messageListStyles.messageTimeText
   }, formatDateString(Date.now()))), messages.map(function (message, index) {
     return message.user === currentUser ? ( /*#__PURE__*/React.createElement('div', {

@@ -82,6 +82,9 @@ const MessageList = ({ messages, currentUser }) => {
       marginTop: '5px',
       marginBottom: '5px',
     },
+    emptyDiv:{
+      height:'15px'
+    }
   };
 
   const formatDateString = (inputDate) => {
@@ -109,7 +112,7 @@ const MessageList = ({ messages, currentUser }) => {
       'div',
       { style: messageListStyles.leftDiv },
       React.createElement('div', { style: messageListStyles.leftSideChat }, "I wish you a good day!",
-      React.createElement('div', null, ""),
+      React.createElement('div', { style: messageListStyles.emptyDiv }, ""),
       React.createElement('div', null, "How may I help you today?")),
       React.createElement('div', { style: messageListStyles.messageTimeText}, formatDateString(Date.now()))
     ),
