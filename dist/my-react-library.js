@@ -593,7 +593,10 @@ var ChatContainer = function ChatContainer(props) {
     var env_type = props.env_type,
     chat_name = props.chat_name,
     sessionId = props.sessionId;
-  var _useState = React.useState([]),
+  var _useState = React.useState([{
+      text: "I wish you a good day!",
+      user: "OtherUser"
+    }]),
     _useState2 = _slicedToArray(_useState, 2),
     messages = _useState2[0],
     setMessages = _useState2[1];
@@ -651,15 +654,9 @@ var ChatContainer = function ChatContainer(props) {
     }
   };
   React.useEffect(function () {
-    if (sessionId !== "") {
-      var initMsg = {
-        text: "I wish you a good day!",
-        user: "OtherUser"
-      };
-      setMessages(function (prevMsg) {
-        return [].concat(_toConsumableArray(prevMsg), [initMsg]);
-      });
-    }
+    // const initMsg ={ text: "I wish you a good day!", user: "OtherUser" };
+    // setMessages((prevMsg) =>[...prevMsg, initMsg]);
+
     // Simulated messages from an API call or WebSocket
     // const initialMessages = [
     //   { text: "Hi, How can I help you?", user: "Merchant" },
