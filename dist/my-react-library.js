@@ -656,7 +656,9 @@ var ChatContainer = function ChatContainer(props) {
         text: "I wish you a good day!",
         user: "OtherUser"
       };
-      setMessages(initMsg);
+      setMessages(function (prevMsg) {
+        return [].concat(_toConsumableArray(prevMsg), [initMsg]);
+      });
     }
     // Simulated messages from an API call or WebSocket
     // const initialMessages = [
