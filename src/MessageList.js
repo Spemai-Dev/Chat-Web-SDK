@@ -107,10 +107,10 @@ const MessageList = ({ messages, currentUser }) => {
     null,
     React.createElement(
       'div',
-      { style: messageListStyles.rightDiv },
-      React.createElement('div', { style: messageListStyles.rightSideChat }, "I wish you a good day!"),
-      React.createElement('div', { style: messageListStyles.rightSideChat }, ""),
-      React.createElement('div', { style: messageListStyles.rightSideChat }, "How may I help you today?"),
+      { style: messageListStyles.leftDiv },
+      React.createElement('div', { style: messageListStyles.leftSideChat }, "I wish you a good day!",
+      React.createElement('div', null, ""),
+      React.createElement('div', null, "How may I help you today?")),
       React.createElement('div', { style: messageListStyles.messageTimeText}, formatDateString(Date.now()))
     ),
     messages.map((message, index) =>

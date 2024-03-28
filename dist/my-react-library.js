@@ -496,14 +496,10 @@ var MessageList = function MessageList(_ref) {
     return "".concat(formattedHours, ".").concat(formattedMinutes, " ").concat(amOrPm);
   };
   return /*#__PURE__*/React.createElement('div', null, /*#__PURE__*/React.createElement('div', {
-    style: messageListStyles.rightDiv
+    style: messageListStyles.leftDiv
   }, /*#__PURE__*/React.createElement('div', {
-    style: messageListStyles.rightSideChat
-  }, "I wish you a good day!"), /*#__PURE__*/React.createElement('div', {
-    style: messageListStyles.rightSideChat
-  }, ""), /*#__PURE__*/React.createElement('div', {
-    style: messageListStyles.rightSideChat
-  }, "How may I help you today?"), /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.leftSideChat
+  }, "I wish you a good day!", /*#__PURE__*/React.createElement('div', null, ""), /*#__PURE__*/React.createElement('div', null, "How may I help you today?")), /*#__PURE__*/React.createElement('div', {
     style: messageListStyles.messageTimeText
   }, formatDateString(Date.now()))), messages.map(function (message, index) {
     return message.user === currentUser ? ( /*#__PURE__*/React.createElement('div', {
