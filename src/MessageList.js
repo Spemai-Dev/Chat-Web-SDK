@@ -32,7 +32,8 @@ const MessageList = ({ messages, currentUser }) => {
       marginBottom: '10px',
     },
     leftSideChat: {
-      width: '70%',
+      width: 'auto',
+      maxWidth:'70%',
       flexShrink: 0,
       borderRadius: '0px 8px 8px 8px',
       border: '1px solid #F0F0F0',
@@ -56,7 +57,8 @@ const MessageList = ({ messages, currentUser }) => {
       marginBottom: '10px',
     },
     rightSideChat: {
-      width: '70%',
+      width: 'auto',
+      maxWidth:'70%',
       flexShrink: 0,
       borderRadius: '0px 8px 8px 8px',
       background: '#178560',
