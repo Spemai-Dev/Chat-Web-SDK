@@ -667,7 +667,7 @@ var ChatContainer = function ChatContainer(props) {
     } else {
       setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     }
-  }, []);
+  }, [messages]);
   var detectAndConvertLink = function detectAndConvertLink(text) {
     var urlRegex = /(?:https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
     // const urlRegex = /(https?:\/\/[^\s]+)/g;
