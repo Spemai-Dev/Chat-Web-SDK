@@ -64,7 +64,7 @@ const ChatContainer = (props) => {
   useEffect(() => {
     if(sessionId !== ""){
       const initMsg ={ text: "I wish you a good day!", user: "OtherUser" };
-      setMessages(initMsg);
+      setMessages((prevMsg) =>[...prevMsg, initMsg]);
     }
     // Simulated messages from an API call or WebSocket
     // const initialMessages = [
