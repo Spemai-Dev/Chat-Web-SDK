@@ -99,7 +99,7 @@ const ChatContainer = (props) => {
   // }
   const detectAndConvertLink = (text) => {
     const urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})/gi;
-    const parts = text.split(/\s+/);
+    const parts = text.split(/(\s+)/); // Split by whitespace and keep whitespace parts
 
     return parts.map((part, index) => {
         if (part.match(urlRegex)) {
@@ -117,6 +117,7 @@ const ChatContainer = (props) => {
         return part;
     });
 }
+
 
 
   const sendMessage = async (message) => {
