@@ -670,9 +670,26 @@ var ChatContainer = function ChatContainer(props) {
       setBaseUrl("https://api.spemai.com/spemai-cai-corev1-proxy/api/v1/default-chat/ask/");
     }
   }, []);
+
+  // const detectAndConvertLink=(text)=> {
+  //   const urlRegex = /(https?:\/\/[^\s]+)/g;
+  //   const parts = text.split(urlRegex);
+
+  //   return parts.map((part, index) => {
+  //       if (part.match(urlRegex)) {
+  //           return React.createElement('a', {
+  //               key: index,
+  //               href: part,
+  //               target: '_blank',
+  //               rel: 'noopener noreferrer'
+  //           }, part);
+  //       }
+
+  //       return part;
+  //   });
+  // }
   var detectAndConvertLink = function detectAndConvertLink(text) {
-    var urlRegex = /(?:https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
-    // const urlRegex = /(https?:\/\/[^\s]+)/g;
+    var urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
     var parts = text.split(urlRegex);
     return parts.map(function (part, index) {
       if (part.match(urlRegex)) {
