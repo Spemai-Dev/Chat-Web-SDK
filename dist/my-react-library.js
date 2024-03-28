@@ -651,10 +651,13 @@ var ChatContainer = function ChatContainer(props) {
     }
   };
   React.useEffect(function () {
-    // if(sessionId !== ""){
-    //   const initMsg ={ text: "Hi, How can I help you?", user: "User123" };
-    //   setMessages(initMsg);
-    // }
+    if (sessionId !== "") {
+      var initMsg = {
+        text: "I wish you a good day!",
+        user: "User123"
+      };
+      setMessages(initMsg);
+    }
     // Simulated messages from an API call or WebSocket
     // const initialMessages = [
     //   { text: "Hi, How can I help you?", user: "Merchant" },
@@ -669,7 +672,8 @@ var ChatContainer = function ChatContainer(props) {
     }
   }, []);
   var detectAndConvertLink = function detectAndConvertLink(text) {
-    var urlRegex = /(https?:\/\/[^\s]+)/g;
+    var urlRegex = /(?:https?:\/\/(?:www\.|(?!www))[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
+    // const urlRegex = /(https?:\/\/[^\s]+)/g;
     var parts = text.split(urlRegex);
     return parts.map(function (part, index) {
       if (part.match(urlRegex)) {
