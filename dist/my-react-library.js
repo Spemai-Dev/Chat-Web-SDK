@@ -689,8 +689,8 @@ var ChatContainer = function ChatContainer(props) {
   //   });
   // }
   var detectAndConvertLink = function detectAndConvertLink(text) {
-    var urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
-    var parts = text.split(urlRegex);
+    var urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})/gi;
+    var parts = text.split(/\s+/);
     return parts.map(function (part, index) {
       if (part.match(urlRegex)) {
         return /*#__PURE__*/React.createElement('a', {
@@ -698,6 +698,11 @@ var ChatContainer = function ChatContainer(props) {
           href: part,
           target: '_blank',
           rel: 'noopener noreferrer'
+        }, part);
+      } else if (part.match(/\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b/)) {
+        // Sequence of 4 numbers detected
+        return /*#__PURE__*/React.createElement('span', {
+          key: index
         }, part);
       }
       return part;
