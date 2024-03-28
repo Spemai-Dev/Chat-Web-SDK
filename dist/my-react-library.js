@@ -495,22 +495,23 @@ var MessageList = function MessageList(_ref) {
     var formattedMinutes = minutes < 10 ? "0".concat(minutes) : minutes;
     return "".concat(formattedHours, ".").concat(formattedMinutes, " ").concat(amOrPm);
   };
-  var renderMessage = function renderMessage(message) {
-    var messageLines = message.text.split('\n'); // Split message by new lines
-    var formattedMessage = messageLines.map(function (line, lineIndex) {
-      return /*#__PURE__*/React.createElement('div', {
-        key: lineIndex
-      }, line);
-    });
-    return /*#__PURE__*/React.createElement('div', {}, formattedMessage);
-  };
-  return /*#__PURE__*/React.createElement('div', null, messages.map(function (message, index) {
+  return /*#__PURE__*/React.createElement('div', null, /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.rightDiv
+  }, /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.rightSideChat
+  }, "I wish you a good day!"), /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.rightSideChat
+  }, ""), /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.rightSideChat
+  }, "How may I help you today?"), /*#__PURE__*/React.createElement('div', {
+    style: messageListStyles.messageTimeText
+  }, formatDateString(Date.now()))), messages.map(function (message, index) {
     return message.user === currentUser ? ( /*#__PURE__*/React.createElement('div', {
       style: messageListStyles.rightDiv,
       key: index
     }, /*#__PURE__*/React.createElement('div', {
       style: messageListStyles.rightSideChat
-    }, renderMessage(message.text)), /*#__PURE__*/React.createElement('div', {
+    }, message.text), /*#__PURE__*/React.createElement('div', {
       style: messageListStyles.messageTimeText
     }, formatDateString(Date.now())))) : ( /*#__PURE__*/React.createElement('div', {
       style: messageListStyles.leftDiv,
@@ -666,11 +667,10 @@ var ChatContainer = function ChatContainer(props) {
     // setMessages((prevMsg) =>[...prevMsg, initMsg]);
 
     // Simulated messages from an API call or WebSocket
-    var initialMessages = [{
-      text: "I wish you a good day!\nHow may I help you today?",
-      user: "OtherUser"
-    }];
-    setMessages(initialMessages);
+    // const initialMessages = [
+    //   { text: "I wish you a good day!\nHow may I help you today?", user: "OtherUser" },
+    //  ];
+    // setMessages(initialMessages);
     if (env_type === "DEV") {
       setBaseUrl("https://cai-core-gke-dev.spemai.com/api/v1/default-chat/ask/");
     } else if (env_type === "UAT") {

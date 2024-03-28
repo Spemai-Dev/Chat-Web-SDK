@@ -67,10 +67,10 @@ const ChatContainer = (props) => {
       // setMessages((prevMsg) =>[...prevMsg, initMsg]);
     
     // Simulated messages from an API call or WebSocket
-    const initialMessages = [
-      { text: "I wish you a good day!\nHow may I help you today?", user: "OtherUser" },
-     ];
-    setMessages(initialMessages);
+    // const initialMessages = [
+    //   { text: "I wish you a good day!\nHow may I help you today?", user: "OtherUser" },
+    //  ];
+    // setMessages(initialMessages);
     if (env_type === "DEV") {
       setBaseUrl("https://cai-core-gke-dev.spemai.com/api/v1/default-chat/ask/") ;
     } else if (env_type === "UAT") {
