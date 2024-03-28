@@ -94,30 +94,6 @@ const MessageList = ({ messages, currentUser }) => {
 
     return `${formattedHours}.${formattedMinutes} ${amOrPm}`;
   };
-  const SlowDisplayText = ({ text }) => {
-    const [displayText, setDisplayText] = useState('');
-
-    useEffect(() => {
-        let currentIndex = 0;
-        const interval = setInterval(() => {
-            if (currentIndex < text.length) {
-                setDisplayText(prevText => prevText + text[currentIndex]);
-                currentIndex++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 100); // Adjust the interval duration (in milliseconds) for the desired slow motion effect
-
-        return () => clearInterval(interval);
-    }, [text]);
-
-    return (
-      React.createElement(
-        'span',
-        React.createElement('span', { }, displayText)
-      )
-    );
-}
   
   return React.createElement(
     'div',
@@ -127,7 +103,7 @@ const MessageList = ({ messages, currentUser }) => {
         React.createElement(
           'div',
           { style: messageListStyles.rightDiv ,key: index },
-          React.createElement('div', { style: messageListStyles.rightSideChat }, <SlowDisplayText text={message.text} />),
+          React.createElement('div', { style: messageListStyles.rightSideChat }, message.text),
           React.createElement('div', { style: messageListStyles.messageTimeText}, formatDateString(Date.now()))
         )
       ) : (
