@@ -68,7 +68,7 @@ const ChatContainer = (props) => {
     
     // Simulated messages from an API call or WebSocket
     const initialMessages = [
-      { text: "I wish you a good day!", user: "OtherUser" },
+      { text: "I wish you a good day!\nHow may I help you today?", user: "OtherUser" },
      ];
     setMessages(initialMessages);
     if (env_type === "DEV") {

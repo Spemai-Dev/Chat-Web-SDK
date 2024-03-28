@@ -94,6 +94,13 @@ const MessageList = ({ messages, currentUser }) => {
 
     return `${formattedHours}.${formattedMinutes} ${amOrPm}`;
   };
+  const renderMessage = (message) => {
+    const messageLines = message.text.split('\n'); // Split message by new lines
+    const formattedMessage = messageLines.map((line, lineIndex) => (
+        React.createElement('div', { key: lineIndex }, line)
+    ));
+    return formattedMessage;
+};
   
   return React.createElement(
     'div',
@@ -103,7 +110,7 @@ const MessageList = ({ messages, currentUser }) => {
         React.createElement(
           'div',
           { style: messageListStyles.rightDiv ,key: index },
-          React.createElement('div', { style: messageListStyles.rightSideChat }, message.text),
+          React.createElement('div', { style: messageListStyles.rightSideChat }, renderMessage(message.text)),
           React.createElement('div', { style: messageListStyles.messageTimeText}, formatDateString(Date.now()))
         )
       ) : (
