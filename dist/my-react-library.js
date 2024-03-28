@@ -593,10 +593,7 @@ var ChatContainer = function ChatContainer(props) {
     var env_type = props.env_type,
     chat_name = props.chat_name,
     sessionId = props.sessionId;
-  var _useState = React.useState([{
-      text: "I wish you a good day!",
-      user: "OtherUser"
-    }]),
+  var _useState = React.useState([]),
     _useState2 = _slicedToArray(_useState, 2),
     messages = _useState2[0],
     setMessages = _useState2[1];
@@ -658,10 +655,11 @@ var ChatContainer = function ChatContainer(props) {
     // setMessages((prevMsg) =>[...prevMsg, initMsg]);
 
     // Simulated messages from an API call or WebSocket
-    // const initialMessages = [
-    //   { text: "Hi, How can I help you?", user: "Merchant" },
-    //  ];
-    // setMessages(initialMessages);
+    var initialMessages = [{
+      text: "I wish you a good day!",
+      user: "OtherUser"
+    }];
+    setMessages(initialMessages);
     if (env_type === "DEV") {
       setBaseUrl("https://cai-core-gke-dev.spemai.com/api/v1/default-chat/ask/");
     } else if (env_type === "UAT") {
