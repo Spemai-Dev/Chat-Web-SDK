@@ -690,7 +690,8 @@ var ChatContainer = function ChatContainer(props) {
   // }
   var detectAndConvertLink = function detectAndConvertLink(text) {
     var urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})/gi;
-    var parts = text.split(/\s+/);
+    var parts = text.split(/(\s+)/); // Split by whitespace and keep whitespace parts
+
     return parts.map(function (part, index) {
       if (part.match(urlRegex)) {
         return /*#__PURE__*/React.createElement('a', {
