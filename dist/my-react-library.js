@@ -638,8 +638,16 @@ var ChatContainer = function ChatContainer(props) {
       overflowY: "scroll",
       height: "335px",
       display: "flex",
-      flexDirection: "column-reverse"
+      flexDirection: "column-reverse",
+      scrollbarWidth: "none",
+      /* Firefox */
+      msOverflowStyle: "none",
+      /* IE 10+ */
+      "&::-webkit-scrollbar": {
+        display: "none" /* Safari and Chrome */
+      }
     },
+
     chatContainerFooter: {
       borderTop: "1px solid #F0F0F0",
       padding: "15px",
