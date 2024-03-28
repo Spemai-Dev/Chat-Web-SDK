@@ -111,8 +111,12 @@ const MessageList = ({ messages, currentUser }) => {
         return () => clearInterval(interval);
     }, [text]);
 
-    return  displayText;
-    
+    return (
+      React.createElement(
+        'span',
+        React.createElement('span', { }, displayText)
+      )
+    );
 }
   
   return React.createElement(
