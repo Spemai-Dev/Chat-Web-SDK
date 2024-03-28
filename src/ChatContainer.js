@@ -9,7 +9,7 @@ import arrow_left from "./images/arrow-left-s-line.png";
 const ChatContainer = (props) => {
   //const baseUrl = process.env.DEV_BASE_URL;
   const { api_key, agent_id, uuid, user_id,env_type, chat_name,sessionId } = props;
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([{ text: "I wish you a good day!", user: "OtherUser" }]);
   const [baseUrl, setBaseUrl] = useState("");
   const currentUser = "User123"; // Simulated current user
   const chatContainerStyles = {
@@ -62,10 +62,10 @@ const ChatContainer = (props) => {
 
 
   useEffect(() => {
-    if(sessionId !== ""){
-      const initMsg ={ text: "I wish you a good day!", user: "OtherUser" };
-      setMessages((prevMsg) =>[...prevMsg, initMsg]);
-    }
+    
+      // const initMsg ={ text: "I wish you a good day!", user: "OtherUser" };
+      // setMessages((prevMsg) =>[...prevMsg, initMsg]);
+    
     // Simulated messages from an API call or WebSocket
     // const initialMessages = [
     //   { text: "Hi, How can I help you?", user: "Merchant" },
