@@ -98,8 +98,8 @@ const ChatContainer = (props) => {
   //   });
   // }
   const detectAndConvertLink = (text) => {
-    const urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})|(\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b)/gi;
-    const parts = text.split(urlRegex);
+    const urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})/gi;
+    const parts = text.split(/\s+/);
 
     return parts.map((part, index) => {
         if (part.match(urlRegex)) {
@@ -109,11 +109,15 @@ const ChatContainer = (props) => {
                 target: '_blank',
                 rel: 'noopener noreferrer'
             }, part);
+        } else if (part.match(/\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b/)) {
+            // Sequence of 4 numbers detected
+            return React.createElement('span', { key: index }, part);
         }
 
         return part;
     });
 }
+
 
   const sendMessage = async (message) => {
     const newMessage = { text: message, user: currentUser };
