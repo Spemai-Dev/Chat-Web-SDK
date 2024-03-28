@@ -99,7 +99,7 @@ const MessageList = ({ messages, currentUser }) => {
     const formattedMessage = messageLines.map((line, lineIndex) => (
         React.createElement('div', { key: lineIndex }, line)
     ));
-    return formattedMessage;
+    return React.createElement('div', { }, formattedMessage);
 };
   
   return React.createElement(

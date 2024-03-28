@@ -502,7 +502,7 @@ var MessageList = function MessageList(_ref) {
         key: lineIndex
       }, line);
     });
-    return formattedMessage;
+    return /*#__PURE__*/React.createElement('div', {}, formattedMessage);
   };
   return /*#__PURE__*/React.createElement('div', null, messages.map(function (message, index) {
     return message.user === currentUser ? ( /*#__PURE__*/React.createElement('div', {
