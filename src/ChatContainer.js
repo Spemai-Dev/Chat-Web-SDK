@@ -98,25 +98,34 @@ const ChatContainer = (props) => {
   //   });
   // }
   const detectAndConvertLink = (text) => {
-    const urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,})/gi;
+    const urlRegex = /(?:https?:\/\/[^\s.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,}|[^\s]+\.[^\s]{2,}(?<!\.)|\+\d{2}\s\d{3}\s\d{3}\s\d{3})/gi;
     const parts = text.split(/(\s+)/); // Split by whitespace and keep whitespace parts
 
     return parts.map((part, index) => {
         if (part.match(urlRegex)) {
+            let url = part;
+            // Check if the URL starts with http:// or https://
+            if (!/^https?:\/\//i.test(url)) {
+                url = 'http://' + url; // Append http:// if not present
+            }
             return React.createElement('a', {
                 key: index,
-                href: part,
+                href: url,
                 target: '_blank',
                 rel: 'noopener noreferrer'
             }, part);
         } else if (part.match(/\b(?:\d{4}|\d{1,3}(?:,\d{3})+)(?:\.\d+)?\b/)) {
             // Sequence of 4 numbers detected
             return React.createElement('span', { key: index }, part);
+        } else if (part.match(/\+\d{2}\s\d{3}\s\d{3}\s\d{3}/)) {
+            // Contact number detected
+            return React.createElement('span', { key: index }, part);
         }
 
         return part;
     });
 }
+
 
 
 
