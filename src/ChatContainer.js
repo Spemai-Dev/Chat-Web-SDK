@@ -20,6 +20,12 @@ const ChatContainer = (props) => {
       fontFamily: "Arial, sans-serif",
       /* Additional properties can be added here */
     },
+    "@media (max-width: 768px)": {
+      chatContainer: {
+        width: "100%", // Set width to 100% for smaller screens
+        height: "100vh", // Set height to full viewport height
+      },
+    },
     chatContainerHead: {
       display: "flex",
       justifyContent: "space-between",
